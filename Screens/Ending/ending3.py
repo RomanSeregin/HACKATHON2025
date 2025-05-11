@@ -1,0 +1,36 @@
+import pygame
+from abc import ABC
+from Managers.config_manager import ConfigManager
+from Classes.screen import Screen
+from Classes.image import Image
+from Classes.button import Button
+from constants import endingPath
+
+
+class Ending3(Screen, ABC):
+    def __init__(self):
+        self.config = ConfigManager()
+        self.endingPath = endingPath
+        super().__init__()
+
+    def setup(self):
+        self.elements = [
+            Image(0, 0, f'{endingPath}/ending3/images/background.png'),
+            Button('end', 621, 477, f'{endingPath}/ending3/buttons/end.png', None, destination='menu')
+        ]
+
+    def handleEvent(self):
+        for element in self.elements:
+            if hasattr(element, 'handleEvent'):
+                if element.handleEvent():
+                    break
+
+    def handleHover(self):
+        for element in self.elements:
+            if hasattr(element, 'handleHover'):
+                if element.handleHover():
+                    break
+
+    def render(self, surface):
+        for element in self.elements:
+            element.render(surface)
